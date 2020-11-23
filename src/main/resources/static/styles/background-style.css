@@ -1,0 +1,12 @@
+
+body {
+    background-image: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url("../images/globe-flight-path.jpg");
+    background-repeat: repeat-x;
+    background-attachment: fixed;
+    background-size: cover;
+    animation: slide 20s linear infinite alternate;
+}
+
+@keyframes slide {
+    0% {background-position: 100% 0;}
+}

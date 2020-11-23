@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:width="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>International Airports</title>
+
+    <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" th:href="@{/styles/homepage-pic-slider.css}" href="../static/styles/homepage-pic-slider.css">
+    <link rel="stylesheet" th:href="@{/styles/header.css}" href="../static/styles/header.css">
+    <link rel="stylesheet" th:href="@{/styles/footer.css}" href="../static/styles/footer.css">
+    <link rel="stylesheet" th:href="@{/styles/search-box-homepage-style.css}" href="../static/styles/search-box-homepage-style.css">
+
+    <script th:src="@{/scripts/header.js}" src="../static/scripts/header.js"></script>
+
+    <script src="https://code.jquery.com/jquery-1.12.3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <div th:replace="fragments/header :: main-header"></div>
+      <div class="w3-content w3-section">
+        <img class="mySlides w3-animate-fading" style="top: 0; left: 0; position: absolute; width:100vw; height: 100vh; object-fit: cover; background-size: cover; background-position: center" th:src="@{/images/airplane1.jpg}" src="../static/images/airplane1.jpg">
+        <img class="mySlides w3-animate-fading" style="top: 0; left: 0; position: absolute; width:100vw; height: 100vh; object-fit: cover; background-size: cover; background-position: center" th:src="@{/images/airplane2.jpg}" src="../static/images/airplane2.jpg">
+        <img class="mySlides w3-animate-fading" style="top: 0; left: 0; position: absolute; width:100vw; height: 100vh; object-fit: cover; background-size: cover; background-position: center" th:src="@{/images/airplane3.jpg}" src="../static/images/airplane3.jpg">
+        <img class="mySlides w3-animate-fading" style="top: 0; left: 0; position: absolute; width:100vw; height: 100vh; object-fit: cover; background-size: cover; background-position: center" th:src="@{/images/airplane4.jpg}" src="../static/images/airplane4.jpg">
+        <img class="mySlides w3-animate-fading" style="top: 0; left: 0; position: absolute; width:100vw; height: 100vh; object-fit: cover; background-size: cover; background-position: center" th:src="@{/images/airplane5.jpg}" src="../static/images/airplane5.jpg">
+        <img class="mySlides w3-animate-fading" style="top: 0; left: 0; position: absolute; width:100vw; height: 100vh; object-fit: cover; background-size: cover; background-position: center" th:src="@{/images/airplane6.jpg}" src="../static/images/airplane6.jpg">
+      </div>
+      <div id="content">
+        <div class="main-pic">
+          <form id="formSearchHome" autocomplete="off" class="navbar-nav">
+            <div class="autocomplete search-box-home">
+              <input id="searchBarHome" type="text" placeholder=" Search an airport">
+              <span id="cancelSearch"></span>
+            </div>
+            <a id="okButtonHome" th:onclick="executeSearchHome()" title="Execute" class="glyphicon glyphicon-ok-circle"></a>
+          </form>
+        </div>
+        <div th:replace="fragments/footer :: footer"></div>
+      </div>
+    </div>
+
+    <script>
+      var myIndex = 0;
+      carousel();
+
+      function carousel() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        for (i = 0; i < x.length; i++) {
+          x[i].style.display = "none";
+        }
+        myIndex++;
+        if (myIndex > x.length) {myIndex = 1}
+        x[myIndex-1].style.display = "block";
+        setTimeout(carousel, 8000);
+      }
+
+      document.getElementById("formSearch").style.display = "none";
+
+      var searchBoxHome = document.querySelectorAll('.search-box-home input[type="text"] + span');
+      var elm;
+      searchBoxHome.forEach(function (elm) {
+        elm.addEventListener('click', function () {
+          elm.previousElementSibling.value = '';
+          document.getElementById("okButtonHome").style.display = "none";
+        });
+      });
+
+      var sbh = document.getElementById("searchBarHome");
+      sbh.addEventListener("input", function () {
+        var inp = this.value;
+        if (inp.length > 0) {
+          document.getElementById("okButtonHome").style.display = "inline-block";
+        } else {
+          document.getElementById("okButtonHome").style.display = "none";
+        }
+      });
+
+      function executeSearchHome() {
+        var valInput = document.getElementById("searchBarHome");
+        var valOK = document.getElementById("okButtonHome");
+        valOK.setAttribute("href", "[[@{/infoPage?name=}]]" + encodeURIComponent(valInput.value));
+      }
+    </script>
+
+    <script type="text/javascript" th:inline="javascript">
+      function autocompleteHome(inp, arr) {
+        /*the autocomplete function takes two arguments,
+        the text field element and an array of possible autocompleted values:*/
+        var currentFocus;
+        /*execute a function when someone writes in the text field:*/
+        inp.addEventListener("input", function(e) {
+          var a, b, i, val = this.value;
+          /*close any already open lists of autocompleted values*/
+          closeAllLists();
+          if (!val) { return false;}
+          currentFocus = -1;
+          /*create a DIV element that will contain the items (values):*/
+          a = document.createElement("DIV");
+          a.setAttribute("id", this.id + "autocomplete-list");
+          a.setAttribute("class", "autocomplete-items");
+          /*append the DIV element as a child of the autocomplete container:*/
+          this.parentNode.appendChild(a);
+          /*for each item in the array...*/
+          for (i = 0; i < arr.length; i++) {
+            /*below 7 lines searches the item that starts with the same letters as text field, from the beginning */
+            /*check if the item starts with the same letters as the text field value:*/
+            /*if (arr[i].substr(0, val.length).toUpperCase() === val.toUpperCase()) {*/
+            /*create a DIV element for each matching element:*/
+            /*b = document.createElement("DIV");*/
+            /*make the matching letters bold:*/
+            /*b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";*/
+            /*b.innerHTML += arr[i].substr(val.length);*/
+
+            /*check if the item contains the same letters anywhere in the string as the text field value:*/
+            if (arr[i].substr(arr[i].toLowerCase().indexOf(val.toLowerCase()), val.length).toUpperCase() === val.toUpperCase()) {
+              /*create a DIV element for each matching element:*/
+              b = document.createElement("DIV");
+              b.style.borderRadius="10px";
+              b.style.border = "1px solid #CEE4FA";
+              /*make the matching letters bold:*/
+              b.innerHTML = arr[i].substr(0, arr[i].toLowerCase().indexOf(val.toLowerCase()))
+                + "<strong>" + arr[i].substr(arr[i].toLowerCase().indexOf(val.toLowerCase()), val.length) + "</strong>";
+              /*complete the finding string*/
+              b.innerHTML += arr[i].substr(arr[i].toLowerCase().indexOf(val.toLowerCase()) + val.length);
+              /*insert a input field that will hold the current array item's value:*/
+              b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+              /*execute a function when someone clicks on the item value (DIV element):*/
+              b.addEventListener("click", function(e) {
+                /*insert the value for the autocomplete text field:*/
+                inp.value = this.getElementsByTagName("input")[0].value;
+                /*close the list of autocompleted values,
+                (or any other open lists of autocompleted values:*/
+                closeAllLists();
+              });
+              a.appendChild(b);
+            }
+          }
+        });
+        /*execute a function presses a key on the keyboard:*/
+        inp.addEventListener("keydown", function(e) {
+          var x = document.getElementById(this.id + "autocomplete-list");
+          if (x) x = x.getElementsByTagName("div");
+          if (e.keyCode === 40) {
+            /*If the arrow DOWN key is pressed,
+            increase the currentFocus variable:*/
+            currentFocus++;
+            /*and and make the current item more visible:*/
+            addActive(x);
+          } else if (e.keyCode === 38) { //up
+            /*If the arrow UP key is pressed,
+            decrease the currentFocus variable:*/
+            currentFocus--;
+            /*and and make the current item more visible:*/
+            addActive(x);
+          } else if (e.keyCode === 13) {
+            /*If the ENTER key is pressed, prevent the form from being submitted,*/
+            e.preventDefault();
+            if (currentFocus > -1) {
+              /*and simulate a click on the "active" item:*/
+              if (x) x[currentFocus].click();
+            }
+          }
+        });
+        function addActive(x) {
+          /*a function to classify an item as "active":*/
+          if (!x) return false;
+          /*start by removing the "active" class on all items:*/
+          removeActive(x);
+          if (currentFocus >= x.length) currentFocus = 0;
+          if (currentFocus < 0) currentFocus = (x.length - 1);
+          /*add class "autocomplete-active":*/
+          x[currentFocus].classList.add("autocomplete-active");
+        }
+        function removeActive(x) {
+          /*a function to remove the "active" class from all autocomplete items:*/
+          for (var i = 0; i < x.length; i++) {
+            x[i].classList.remove("autocomplete-active");
+          }
+        }
+        function closeAllLists(elmnt) {
+          /*close all autocomplete lists in the document,
+          except the one passed as an argument:*/
+          var x = document.getElementsByClassName("autocomplete-items");
+          for (var i = 0; i < x.length; i++) {
+            if (elmnt !== x[i] && elmnt !== inp) {
+              x[i].parentNode.removeChild(x[i]);
+            }
+          }
+        }
+        /*execute a function when someone clicks in the document:*/
+        document.addEventListener("click", function (e) {
+          closeAllLists(e.target);
+        });
+      }
+
+      var airportNamesHome = [[${airportListNames}]];
+
+      autocompleteHome(document.getElementById("searchBarHome"), airportNamesHome);
+    </script>
+  </body>
+</html>

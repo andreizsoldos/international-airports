@@ -1,0 +1,11 @@
+
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+footer {
+  font-family: 'Poppins', sans-serif;
+  color: #0a79df;
+  bottom: 0;
+  margin: auto;
+  width: 100%;
+  position: fixed;
+}

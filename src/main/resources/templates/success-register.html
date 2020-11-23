@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Successful Registered</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" th:href="@{/styles/success.css}" href="../static/styles/success.css">
+
+  </head>
+
+  <body>
+    <!-- Modal HTML -->
+    <div id="myModal">
+      <div class="modal-dialog modal-confirm-success">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="icon-box">
+              <span class="glyphicon glyphicon-user" th:if="${exists}"></span>
+              <span class="glyphicon glyphicon-ok" th:unless="${exists}"></span>
+            </div>
+            <h4 class="modal-title" th:if="${exists}" th:text="${exists}">Account already exists!</h4>
+            <h4 class="modal-title" th:unless="${exists}" th:text="'Welcome, ' + ${user.getFirstName().toUpperCase()} + '!'">Welcome!</h4>
+          </div>
+          <div class="modal-body">
+            <p class="text-center" th:if="${exists}">You already are a member of our community!</p>
+            <p class="text-center" th:unless="${exists}">You've just become a member of our community!</p>
+          </div>
+          <div class="modal-footer">
+            <a th:href="@{/login}" href="../templates/login.html"><button class="btn btn-success btn-block" data-dismiss="modal">OK</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

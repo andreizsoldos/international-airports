@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Search Results</title>
+
+    <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css}" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{https://cdn.datatables.net/responsive/2.1.0/css/responsive.bootstrap.min.css}" href="https://cdn.datatables.net/responsive/2.1.0/css/responsive.bootstrap.min.css">
+
+    <link rel="stylesheet" th:href="@{/styles/header.css}" href="../static/styles/header.css">
+    <link rel="stylesheet" th:href="@{/styles/footer.css}" href="../static/styles/footer.css">
+    <link rel="stylesheet" th:href="@{/styles/search-results.css}" href="../static/styles/search-results.css">
+    <link rel="stylesheet" th:href="@{/styles/search-box-header-style.css}" href="../static/styles/search-box-header-style.css">
+    <link rel="stylesheet" th:href="@{/styles/background-style.css}" href="../static/styles/background-style.css">
+
+    <script th:src="@{/scripts/header.js}" src="../static/scripts/header.js"></script>
+
+    <script src="https://code.jquery.com/jquery-1.12.3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js" charset="utf-8"></script>
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <div th:replace="fragments/header :: main-header"></div>
+      <div id="content">
+        <table id="table_pagination" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <!--/*@thymesVar id="airportRegionsHeader" type=""*/-->
+              <th class="th-sm" th:each="airportHeader : ${airportRegionsHeader}" th:text="${airportHeader}"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="airport : ${listAirports}">
+              <td><a th:href="@{/infoPage(name=${airport.getName()})}" th:text="${airport.getName()}"></a></td>
+              <td><a th:text="${airport.getCountry()}"></a></td>
+              <td><a th:text="${airport.getCity()}"></a></td>
+              <td><a th:text="${airport.getIata()}"></a></td>
+              <td><a th:text="${airport.getIcao()}"></a></td>
+              <td><a th:text="${airport.getTz()}"></a></td>
+            </tr>
+          </tbody>
+        </table>
+        <div th:replace="fragments/footer :: footer"></div>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function(){
+        $("#table_pagination").DataTable({
+          "pagingType": "full_numbers"
+        });
+        $('.dataTables_length').addClass('bs-select');
+      });
+    </script>
+  </body>
+</html>

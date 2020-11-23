@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Register page</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" th:href="@{/styles/authentication.css}" href="../static/styles/authentication.css">
+    <link rel="stylesheet" th:href="@{/styles/background-style.css}" href="../static/styles/background-style.css">
+
+  </head>
+
+  <body>
+    <div class="auth-wrapper">
+      <div class="container card">
+        <div class="title">
+          <h1>Registration
+            <a class="close glyphicon glyphicon-remove" th:href="@{/login}" href="../templates/login.html"></a>
+          </h1>
+        </div>
+        <div class="input-container">
+          <span class="help-block" th:if="${exists}">
+            <p class="text-danger" th:text="${exists}">Account exists</p>
+          </span>
+        </div>
+        <div class="container">
+          <form th:action="@{/register}" method="post" th:object="${newUser}">
+            <div class="input-container">
+              <input type="text" id="firstName" class="form-control" placeholder="First name" th:field="*{firstName}">
+              <span class="help-block" th:if="${#fields.hasErrors('firstName')}">
+                <p class="text-danger" th:each="error: ${#fields.errors('firstName')}" th:text="${error}">First name error</p>
+              </span>
+            </div>
+            <div class="input-container">
+              <input type="text" id="lastName" class="form-control" placeholder="Last name" th:field="*{lastName}">
+              <span class="help-block" th:if="${#fields.hasErrors('lastName')}">
+                <p class="text-danger" th:each="error: ${#fields.errors('lastName')}" th:text="${error}">Last name error</p>
+              </span>
+            </div>
+            <div class="input-container">
+              <input type="text" id="email" class="form-control" placeholder="Email" th:field="*{email}">
+              <span class="help-block" th:if="${#fields.hasErrors('email')}">
+                <p class="text-danger" th:each="error: ${#fields.errors('email')}" th:text="${error}">Email error</p>
+              </span>
+            </div>
+            <div class="input-container">
+              <input type="password" id="password" class="form-control" placeholder="Password" th:field="*{password}">
+              <span class="help-block" th:if="${#fields.hasErrors('password')}">
+                <p class="text-danger" th:each="error: ${#fields.errors('password')}" th:text="${error}">Password error</p>
+              </span>
+            </div>
+            <div class="input-container">
+              <input type="password" id="matchingPassword" class="form-control" placeholder="Repeat password" th:field="*{matchingPassword}">
+              <span class="text-danger" th:each="error: ${#fields.errors('matchingPassword')}">
+                <span class="help-block" th:each="message : ${error.split(',')}">
+                  <p class="text-danger error-message"  th:text="${message}">Repeat password error</p>
+                </span>
+              </span>
+            </div>
+            <div class="button-container">
+              <button type="submit"><span>Create account</span></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

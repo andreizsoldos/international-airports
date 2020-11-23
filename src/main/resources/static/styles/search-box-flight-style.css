@@ -1,0 +1,139 @@
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+form label {
+  color: #47748b;
+  display:inline-block;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+table {
+  text-align: center;
+  vertical-align: center;
+  line-height: 40px;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 2px solid #ed1c40;
+  width: 80%;
+  table-layout: auto;
+  margin: 0 auto;
+  border-radius: .25rem;
+  position: relative;
+}
+
+.space {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+thead tr:first-child {
+  background: #ed1c40;
+  color: #fff;
+  border: none;
+  font-size: x-large;
+}
+
+.center-pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: center;
+}
+
+.center-pager .container {
+  top:0;
+  bottom: 0;
+  width: 40%;
+  height: 100%;
+  border: 2px solid #ed1c40;
+  margin: 0;
+  z-index: 99;
+}
+
+.center-pager .container2 {
+  top:0;
+  bottom: 0;
+  width: 40%;
+  height: calc(100vh - 157px);
+  margin: 0 0 0 -1.25px;
+  border: 2px solid #ed1c40;
+  overflow-y: scroll;
+  display: none;
+}
+
+.list {
+  width: 100%;
+  top: -20px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+.list input {
+  display: none;
+}
+
+.center-pager form input {
+  border-radius: 40px;
+}
+
+.center-pager form input#resultSearch {
+  border-radius: 5px;
+}
+
+.buttons {
+  display: flex;
+}
+
+#submitFlight {
+  width: 30%;
+  margin: auto;
+}
+
+#cancelSubmit {
+  width: 30%;
+  margin: auto;
+}
+
+.autocomplete-flight {
+  /*the container must be positioned relative:*/
+  position: relative;
+  display: inline-block;
+}
+
+.autocomplete-items-flight {
+  position: absolute;
+  border: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin: 0 10px;
+}
+
+.autocomplete-items-flight div {
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
+  font-size: 1.1em;
+  line-height: 1.1em;
+  vertical-align: center;
+  height: 40px;
+  padding: 10px;
+  text-align: center;
+}
+
+.autocomplete-items-flight div:hover {
+  /*when hovering an item:*/
+  background-color: #e9e9e9;
+}
+
+.autocomplete-active-flight {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: #31B0D5 !important;
+  color: #ffffff;
+}

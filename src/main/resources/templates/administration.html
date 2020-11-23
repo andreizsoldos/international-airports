@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Flight List Administration</title>
+
+    <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" th:href="@{/styles/header.css}" href="../static/styles/header.css">
+    <link rel="stylesheet" th:href="@{/styles/footer.css}" href="../static/styles/footer.css">
+    <link rel="stylesheet" th:href="@{/styles/administration.css}" href="../static/styles/administration.css">
+    <link rel="stylesheet" th:href="@{/styles/search-box-header-style.css}" href="../static/styles/search-box-header-style.css">
+    <link rel="stylesheet" th:href="@{/styles/background-style.css}" href="../static/styles/background-style.css">
+
+    <script th:src="@{/scripts/header.js}" src="../static/scripts/header.js"></script>
+
+    <script src="https://code.jquery.com/jquery-1.12.3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <div th:replace="fragments/header :: main-header"></div>
+      <div id="content">
+        <table>
+          <thead>
+            <tr>
+              <th colspan="6">Flight List Administration</th>
+              <th colspan="2">
+                <a class="btn btn-info addButton" href="../templates/new-flight.html" th:href="@{/add-new-flight}" title="Add new flight">
+                  <span><span class="glyphicon glyphicon-plus"></span> Add flight</span>
+                </a>
+              </th>
+            </tr>
+            <tr>
+              <!--/*@thymesVar id="flightsHeader" type=""*/-->
+              <th th:each="flightHeader : ${flightsHeader}" th:text="${flightHeader}">header</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr th:each="flight : ${flightList}">
+            <td th:text="${flight.getId()}">ID</td>
+            <td th:text="${flight.getFlightNo()}">FN</td>
+            <td th:text="${flight.getAirline().getName()}">AC</td>
+            <td th:text="${flight.getDeparture().format(formatter)}">D_DT</td>
+            <td th:text="${flight.getDepartureAirport().getName()}">D_A</td>
+            <td th:text="${flight.getArrival().format(formatter)}">A_DT</td>
+            <td th:text="${flight.getArrivalAirport().getName()}">A_A</td>
+            <td>
+              <span class="glyphicon glyphicon-pencil button edit" style="float: left"></span>
+              <span class="glyphicon glyphicon-trash button delete" style="float: right"></span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div th:replace="fragments/footer :: footer"></div>
+      </div>
+    </div>
+  </body>
+</html>
