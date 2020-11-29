@@ -25,11 +25,6 @@
             <a class="close glyphicon glyphicon-remove" th:href="@{/login}" href="../templates/login.html"></a>
           </h1>
         </div>
-        <div class="input-container">
-          <span class="help-block" th:if="${exists}">
-            <p class="text-danger" th:text="${exists}">Account exists</p>
-          </span>
-        </div>
         <div class="container">
           <form th:action="@{/register}" method="post" th:object="${newUser}">
             <div class="input-container">
@@ -58,10 +53,8 @@
             </div>
             <div class="input-container">
               <input type="password" id="matchingPassword" class="form-control" placeholder="Repeat password" th:field="*{matchingPassword}">
-              <span class="text-danger" th:each="error: ${#fields.errors('matchingPassword')}">
-                <span class="help-block" th:each="message : ${error.split(',')}">
-                  <p class="text-danger error-message"  th:text="${message}">Repeat password error</p>
-                </span>
+              <span class="help-block" th:if="${#fields.hasErrors('matchingPassword')}">
+                <p class="text-danger" th:each="error: ${#fields.errors('matchingPassword')}" th:text="${error}">Matching password error</p>
               </span>
             </div>
             <div class="button-container">
