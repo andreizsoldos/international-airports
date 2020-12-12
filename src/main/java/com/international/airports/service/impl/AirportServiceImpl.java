@@ -16,7 +16,15 @@ public class AirportServiceImpl implements AirportService {
   private AirportRepository airportRepository;
 
   @Override
-  public List<String> getAirportListNames() {
+  public List<String> getAirportNamesByTypingLetters(final String name) {
+    return airportRepository.findByNameContainingIgnoreCase(name)
+            .stream()
+            .map(e -> e.getName())
+            .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<String> getAllAirportListNames() {
     return airportRepository.findAll()
             .stream()
             .map(e -> e.getName())

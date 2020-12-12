@@ -3,7 +3,7 @@ function changeMenuName() {
   var foo = document.getElementById("foot");
   if (mnuName.innerHTML === "Menu") {
     mnuName.innerHTML = "Hide Menu";
-    foo.style.width = calc("100vw - 270px");
+    foo.style.width = 'calc("100vw - 270px")';
   } else {
     mnuName.innerHTML = "Menu";
     foo.style.width = "100vw";

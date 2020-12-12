@@ -23,7 +23,7 @@ public class BuildPropertiesController {
 
   @ModelAttribute("airportListNames")
   public List<String> getAirportListNames() {
-    return airportService.getAirportListNames();
+    return airportService.getAllAirportListNames();
   }
 
   @ModelAttribute("airlineListNames")
