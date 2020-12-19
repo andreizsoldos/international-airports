@@ -37,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     final String[] staticContent = {"/styles/**", "/images/**", "/scripts/**"};
+
     http
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.ALWAYS);

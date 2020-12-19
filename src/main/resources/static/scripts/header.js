@@ -1,6 +1,6 @@
 function changeMenuName() {
-  var mnuName = document.getElementById("mnu");
-  var foo = document.getElementById("foot");
+  var mnuName = document.querySelector("#mnu");
+  var foo = document.querySelector("#foot");
   if (mnuName.innerHTML === "Menu") {
     mnuName.innerHTML = "Hide Menu";
     foo.style.width = 'calc("100vw - 270px")';

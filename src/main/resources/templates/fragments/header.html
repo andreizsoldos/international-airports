@@ -8,15 +8,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--meta name="_csrf" th:content="${_csrf.token}" /> for Spring Security -->
+    <!--meta name="_csrf_header" th:content="${_csrf.headerName}" /> for Spring Security -->
 
     <title>International Airports</title>
 
     <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    <link rel="stylesheet" th:href="@{/styles/header.css}" href="../../static/styles/header.css">
-    <link rel="stylesheet" th:href="@{/styles/search-box-header-style.css}" href="../../static/styles/search-box-header-style.css">
-
-    <script th:src="@{/scripts/header.js}" src="../../static/scripts/header.js"></script>
+    <link type="text/css" rel="stylesheet" th:href="@{/styles/header.css}" href="../../static/styles/header.css">
+    <link type="text/css" rel="stylesheet" th:href="@{/styles/search-box-header-style.css}" href="../../static/styles/search-box-header-style.css">
 
     <script src="https://code.jquery.com/jquery-1.12.3.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
@@ -147,6 +147,9 @@
         </nav>
       </div>
 
+      <script th:src="@{/scripts/header.js}" src="../../static/scripts/header.js"></script>
+      <script th:src="@{/scripts/autocomplete.js}" src="../../static/scripts/autocomplete.js"></script>
+
       <script type="text/javascript">
         $(document).ready(function () {
           $('#sidebarCollapse').on('click', function () {
@@ -161,125 +164,29 @@
         searchBox.forEach(function (elm) {
           elm.addEventListener('click', function () {
             elm.previousElementSibling.value = '';
-            document.getElementById("okButton").style.display = "none";
+            document.querySelector("#okButton").style.display = "none";
           });
         });
 
-        var sb = document.getElementById("searchBar");
+        var sb = document.querySelector("#searchBar");
         sb.addEventListener("input", function () {
           var inp = this.value;
           if (inp.length > 0) {
-            document.getElementById("okButton").style.display = "inline-block";
+            document.querySelector("#okButton").style.display = "inline-block";
           } else {
-            document.getElementById("okButton").style.display = "none";
+            document.querySelector("#okButton").style.display = "none";
           }
         });
 
         function executeSearch() {
-          var valInput = document.getElementById("searchBar");
-          var valOK = document.getElementById("okButton");
+          var valInput = document.querySelector("#searchBar");
+          var valOK = document.querySelector("#okButton");
           valOK.setAttribute("href", "[[@{/infoPage?name=}]]" + encodeURIComponent(valInput.value));
         }
+
+        autocomplete(document.querySelector("#searchBar"));
       </script>
 
-      <script type="text/javascript" th:inline="javascript">
-        var arr = [];
-        fetchAirportNamesWithAjax('');
-
-        function autocompleteHeader(inp) {
-          var currentFocus;
-          inp.addEventListener("input", function(e) {
-            var a, b, i, val = this.value;
-            closeAllLists();
-            if (!val) {
-              return false;
-            }
-
-            fetchAirportNamesWithAjax(val);
-
-            currentFocus = -1;
-            a = document.createElement("DIV");
-            a.setAttribute("id", this.id + "autocomplete-list");
-            a.setAttribute("class", "autocomplete-items");
-            this.parentNode.appendChild(a);
-
-            for (i = 0; i < arr.length; i++) {
-              if (arr[i].substr(arr[i].toLowerCase().indexOf(val.toLowerCase()), val.length).toUpperCase() === val.toUpperCase()) {
-                b = document.createElement("DIV");
-                b.style.borderRadius="40px";
-                b.style.border = "1px solid #CEE4FA";
-                b.innerHTML = arr[i].substr(0, arr[i].toLowerCase().indexOf(val.toLowerCase()))
-                  + "<strong>" + arr[i].substr(arr[i].toLowerCase().indexOf(val.toLowerCase()), val.length) + "</strong>";
-                b.innerHTML += arr[i].substr(arr[i].toLowerCase().indexOf(val.toLowerCase()) + val.length);
-                b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-                b.addEventListener("click", function(e) {
-                  inp.value = this.getElementsByTagName("input")[0].value;
-                  closeAllLists();
-                });
-                a.appendChild(b);
-              }
-            }
-          });
-
-          inp.addEventListener("keydown", function(e) {
-            var x = document.getElementById(this.id + "autocomplete-list");
-            if (x) x = x.getElementsByTagName("div");
-            if (e.keyCode === 40) {
-              currentFocus++;
-              addActive(x);
-            } else if (e.keyCode === 38) { //up
-              currentFocus--;
-              addActive(x);
-            } else if (e.keyCode === 13) {
-              e.preventDefault();
-              if (currentFocus > -1) {
-                if (x) x[currentFocus].click();
-              }
-            }
-          });
-          function addActive(x) {
-            if (!x) return false;
-            removeActive(x);
-            if (currentFocus >= x.length) currentFocus = 0;
-            if (currentFocus < 0) currentFocus = (x.length - 1);
-            x[currentFocus].classList.add("autocomplete-active");
-          }
-          function removeActive(x) {
-            for (var i = 0; i < x.length; i++) {
-              x[i].classList.remove("autocomplete-active");
-            }
-          }
-          function closeAllLists(elmnt) {
-            var x = document.getElementsByClassName("autocomplete-items");
-            for (var i = 0; i < x.length; i++) {
-              if (elmnt !== x[i] && elmnt !== inp) {
-                x[i].parentNode.removeChild(x[i]);
-              }
-            }
-          }
-          document.addEventListener("click", function (e) {
-            closeAllLists(e.target);
-          });
-        }
-
-        function fetchAirportNamesWithAjax(name) {
-          $.ajax({
-            type : "GET",
-            url : "/app/api/airports",
-            data: {
-              'search' : name
-            },
-            success: function(response) {
-              arr = response;
-            },
-            error : function(e) {
-              console.log("ERROR: ", e);
-            }
-          });
-        }
-
-        autocompleteHeader(document.getElementById("searchBar"));
-      </script>
     </div>
   </body>
 </html>
