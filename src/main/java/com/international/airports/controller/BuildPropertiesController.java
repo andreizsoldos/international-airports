@@ -21,11 +21,6 @@ public class BuildPropertiesController {
   @Autowired
   FlightService flightService;
 
-  @ModelAttribute("airlineListNames")
-  public List<String> getAirlineListNames() {
-    return airlineService.getAirlineListNames();
-  }
-
   @ModelAttribute("regions")
   public List<String> getRegionList() {
     return airportService.populateRegionsAlphabetically();

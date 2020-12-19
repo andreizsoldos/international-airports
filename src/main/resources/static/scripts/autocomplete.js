@@ -7,10 +7,10 @@ function fetchAirportAjax(inp, callback) {
     var searchName = this.value;
     return $.ajax({
       type: "GET",
-      url: "/app/api/airports",
+      url: "/app/api/airports?search=" + searchName,
       dataType: "json",
       cache: false,
-      data: {"search": searchName}
+      data: {}
       // beforeSend: function (xhr) {
       // xhr.setRequestHeader(hdr, tok); // for POST request
       // },

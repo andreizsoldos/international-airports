@@ -10,6 +10,4 @@ public interface AirlineService {
 
   List<Airline> populateAirlineSearchResults();
 
-  List<String> getAirlineListNames();
-
 }

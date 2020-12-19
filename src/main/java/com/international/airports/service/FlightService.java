@@ -9,11 +9,9 @@ public interface FlightService {
 
   List<String> populateFlightsHeader();
 
-  void addNewFlightToDatabase(Flight flight);
-
   List<Flight> retrieveAllFlights();
 
-  Flight transformFlight(String newFlightNo,
+  Flight addNewFlightToDatabase(String newFlightNo,
                          String newDepartureDateTime,
                          String newDepartureAirport,
                          String newArrivalDateTime,

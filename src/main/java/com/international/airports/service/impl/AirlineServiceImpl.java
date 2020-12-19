@@ -17,14 +17,6 @@ public class AirlineServiceImpl implements AirlineService {
   private AirlineRepository airlineRepository;
 
   @Override
-  public List<String> getAirlineListNames() {
-    return airlineRepository.findAll()
-            .stream()
-            .map(e -> e.getName())
-            .collect(Collectors.toList());
-  }
-
-  @Override
   public List<String> populateAirlinesHeader() {
     final List<String> list = new ArrayList<>();
     list.add("Airline Name");

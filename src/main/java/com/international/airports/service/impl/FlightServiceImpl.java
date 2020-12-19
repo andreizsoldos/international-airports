@@ -42,7 +42,7 @@ public class FlightServiceImpl implements FlightService {
   }
 
   @Override
-  public Flight transformFlight(final String newFlightNo,
+  public Flight addNewFlightToDatabase(final String newFlightNo,
                                 final String newDepartureDateTime,
                                 final String newDepartureAirport,
                                 final String newArrivalDateTime,
@@ -55,6 +55,7 @@ public class FlightServiceImpl implements FlightService {
     newFlight.setArrival(LocalDateTime.parse(newArrivalDateTime));
     newFlight.setArrivalAirport(getAirport(newArrivalAirport));
     newFlight.setAirline(getAirline(newAirline));
+    flightRepository.save(newFlight);
     return newFlight;
   }
 
@@ -70,11 +71,6 @@ public class FlightServiceImpl implements FlightService {
     return optAirline.stream()
             .findAny()
             .orElse(new Airline());
-  }
-
-  @Override
-  public void addNewFlightToDatabase(final Flight flight) {
-    flightRepository.save(flight);
   }
 
   @Override

@@ -12,8 +12,6 @@ public interface AirportService {
 
   List<Airport> populateAirportSearchResults(String region);
 
-  List<String> getAllAirportListNames();
-
   List<String> getAirportNamesByTypingLetters(String name);
 
 }

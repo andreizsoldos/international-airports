@@ -33,13 +33,12 @@ public class FlightController {
                                                 @ModelAttribute("arrivalAirport") final String newArrivalAirport,
                                                 @ModelAttribute("airline") final String newAirline) {
     final ModelAndView mav = new ModelAndView("redirect:/admin");
-    final Flight newFlight = flightService.transformFlight(newFlightNo,
+    final Flight newFlight = flightService.addNewFlightToDatabase(newFlightNo,
                                                            newDepartureDateTime,
                                                            newDepartureAirport,
                                                            newArrivalDateTime,
                                                            newArrivalAirport,
                                                            newAirline);
-    flightService.addNewFlightToDatabase(newFlight);
     return mav;
   }
 }

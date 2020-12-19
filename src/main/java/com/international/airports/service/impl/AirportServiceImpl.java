@@ -24,14 +24,6 @@ public class AirportServiceImpl implements AirportService {
   }
 
   @Override
-  public List<String> getAllAirportListNames() {
-    return airportRepository.findAll()
-            .stream()
-            .map(e -> e.getName())
-            .collect(Collectors.toList());
-  }
-
-  @Override
   public List<String> populateRegionsAlphabetically() {
     final List<String> list = new ArrayList<>(new HashSet<>(airportRepository.findAll()
             .stream()
