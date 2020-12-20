@@ -2,12 +2,12 @@
 // var hdr = $("meta[name='_csrf_header']").attr("content");
 // var tok = $("meta[name='_csrf']").attr("content");
 
-function fetchAirportAjax(inp, callback) {
+function fetchAjax(inp, strIn, callback) {
   inp.addEventListener('input', function () {
     var searchName = this.value;
     return $.ajax({
       type: "GET",
-      url: "/app/api/airports?search=" + searchName,
+      url: (strIn === 'airports') ? "/app/api/airports?search=" + searchName : "/app/api/airlines?search=" + searchName,
       dataType: "json",
       cache: false,
       data: {}
@@ -22,9 +22,9 @@ function fetchAirportAjax(inp, callback) {
   });
 }
 
-function autocomplete(inp) {
+function autocomplete(inp, outp, strIn) {
   var currentFocus;
-  fetchAirportAjax(inp, function (arr) {
+  fetchAjax(inp, strIn, function (arr) {
     var a, b, i, val = inp.value;
     closeAllLists();
     if (!val) {
@@ -35,12 +35,12 @@ function autocomplete(inp) {
     a = document.createElement("DIV");
     a.setAttribute("id", inp.id + "autocomplete-list");
     a.setAttribute("class", "autocomplete-items");
-    inp.parentNode.appendChild(a);
+    outp.parentNode.appendChild(a);
 
     for (i = 0; i < arr.length; i++) {
       if (arr[i].substr(arr[i].toLowerCase().indexOf(val.toLowerCase()), val.length).toUpperCase() === val.toUpperCase()) {
         b = document.createElement("DIV");
-        b.style.borderRadius="40px";
+        b.style.borderRadius="5px";
         b.style.border = "1px solid #CEE4FA";
         b.innerHTML = arr[i].substr(0, arr[i].toLowerCase().indexOf(val.toLowerCase()))
           + "<strong>" + arr[i].substr(arr[i].toLowerCase().indexOf(val.toLowerCase()), val.length) + "</strong>";

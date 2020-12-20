@@ -17,6 +17,14 @@ public class AirlineServiceImpl implements AirlineService {
   private AirlineRepository airlineRepository;
 
   @Override
+  public List<String> getAirlineNamesByTypingLetters(final String name) {
+    return airlineRepository.findByNameContainingIgnoreCase(name)
+            .stream()
+            .map(e -> e.getName())
+            .collect(Collectors.toList());
+  }
+
+  @Override
   public List<String> populateAirlinesHeader() {
     final List<String> list = new ArrayList<>();
     list.add("Airline Name");
