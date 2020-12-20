@@ -8,7 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <link type="text/css" rel="stylesheet" th:href="@{/styles/error.css}" href="../static/styles/error.css">
+  <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" th:href="@{/styles/error.css}" href="../static/styles/error.css">
 
   </head>
   <body>
@@ -18,10 +19,19 @@
     <div class="container">
       <div class="left-section">
         <div class="inner-content">
-          <h1 class="heading">Whaaat??</h1>
-          <p class="subheading">Looks like the page is no longer here or you're authorization level is too low.</p>
-          <br>
-          <a href="../templates/home-page.html" th:href="@{/}"><p class="subheading" style="text-decoration: none; color: white">You should go back to homepage... or relax on the bench (O_o)</p></a>
+          <!--/*@thymesVar id="status" type=""*/-->
+          <h1 class="heading" th:text="${status}">Code</h1>
+          <!--/*@thymesVar id="error" type=""*/-->
+          <h1 class="heading" style="font-size: 7em; font-weight: bold" th:text="${#strings.toUpperCase(error)}">Error</h1>
+          <!--/*@thymesVar id="path" type=""*/-->
+          <p class="subheading" th:text="'Path: ' + ${path}">Path</p>
+          <br><br><br>
+          <!--/*@thymesVar id="message" type=""*/-->
+          <h2 class="subheading" style="font-size: 3em; color: #f5f6fa" th:text="${message}">Error message</h2>
+          <br><br>
+          <p class="subheading" style="color: #f5f6fa; padding: 0">Back to
+            <a class="subheading glyphicon glyphicon-home" style="text-decoration: none; font-weight: bold; color: white; padding: 0" title="Home Page" href="../templates/home-page.html" th:href="@{/}"></a>
+          </p>
         </div>
       </div>
       <div class="right-section">

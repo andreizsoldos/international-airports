@@ -29,6 +29,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private UserDetailsService userDetailsService;
 
+  @Autowired
+  private CustomAuth authErrors;
+
   @Bean
   public PasswordEncoder bCryptPasswordEncoder() {
     return new BCryptPasswordEncoder(11);
@@ -55,7 +58,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logout()
             .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
             .logoutSuccessUrl("/login?logout")
-            .permitAll();
+            .permitAll()
+            .and()
+            .exceptionHandling()
+            .authenticationEntryPoint(authErrors);
   }
 
   @Bean

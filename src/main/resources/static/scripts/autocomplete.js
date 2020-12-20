@@ -37,9 +37,6 @@ function autocomplete(inp) {
     a.setAttribute("class", "autocomplete-items");
     inp.parentNode.appendChild(a);
 
-    console.log(arr.length);
-    console.log(arr);
-
     for (i = 0; i < arr.length; i++) {
       if (arr[i].substr(arr[i].toLowerCase().indexOf(val.toLowerCase()), val.length).toUpperCase() === val.toUpperCase()) {
         b = document.createElement("DIV");
