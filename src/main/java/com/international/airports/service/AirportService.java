@@ -3,6 +3,7 @@ package com.international.airports.service;
 import com.international.airports.model.Airport;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AirportService {
 
@@ -14,4 +15,5 @@ public interface AirportService {
 
   List<String> getAirportNamesByTypingLetters(String name);
 
+  Optional<Airport> retrieveName(String name);
 }

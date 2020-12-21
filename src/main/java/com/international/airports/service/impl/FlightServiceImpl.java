@@ -6,6 +6,8 @@ import com.international.airports.model.Flight;
 import com.international.airports.repository.AirlineRepository;
 import com.international.airports.repository.AirportRepository;
 import com.international.airports.repository.FlightRepository;
+import com.international.airports.service.AirlineService;
+import com.international.airports.service.AirportService;
 import com.international.airports.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,10 +25,10 @@ public class FlightServiceImpl implements FlightService {
   private FlightRepository flightRepository;
 
   @Autowired
-  private AirportRepository airportRepository;
+  private AirportService airportService;
 
   @Autowired
-  private AirlineRepository airlineRepository;
+  private AirlineService airlineService;
 
   @Override
   public List<String> populateFlightsHeader() {
@@ -60,14 +62,14 @@ public class FlightServiceImpl implements FlightService {
   }
 
   private Airport getAirport(final String name) {
-    final Optional<Airport> optAirport = airportRepository.findByName(name);
+    final Optional<Airport> optAirport = airportService.retrieveName(name);
     return optAirport.stream()
             .findAny()
             .orElse(new Airport());
   }
 
   private Airline getAirline(final String name) {
-    final Optional<Airline> optAirline = airlineRepository.findByName(name);
+    final Optional<Airline> optAirline = airlineService.retrieveName(name);
     return optAirline.stream()
             .findAny()
             .orElse(new Airline());

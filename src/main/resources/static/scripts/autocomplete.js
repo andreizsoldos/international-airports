@@ -7,7 +7,7 @@ function fetchAjax(inp, strIn, callback) {
     var searchName = this.value;
     return $.ajax({
       type: "GET",
-      url: (strIn === 'airports') ? "/app/api/airports?search=" + searchName : "/app/api/airlines?search=" + searchName,
+      url: (strIn === 'airports') ? "/app/api/airports?search=" + encodeURIComponent(searchName) : "/app/api/airlines?search=" + encodeURIComponent(searchName),
       dataType: "json",
       cache: false,
       data: {}

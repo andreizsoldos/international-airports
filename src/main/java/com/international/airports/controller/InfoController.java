@@ -2,6 +2,7 @@ package com.international.airports.controller;
 
 import com.international.airports.model.Airport;
 import com.international.airports.repository.AirportRepository;
+import com.international.airports.service.AirportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -15,13 +16,13 @@ import java.util.Optional;
 public class InfoController {
 
   @Autowired
-  private AirportRepository airportRepository;
+  private AirportService airportService;
 
   @PreAuthorize("hasRole('moderator') or hasRole('admin')")
   @RequestMapping("/infoPage")
   public ModelAndView displayInfo(@RequestParam("name") final String airName) {
     final ModelAndView mav = new ModelAndView("info");
-    final Optional<Airport> optAirport = airportRepository.findByName(airName);
+    final Optional<Airport> optAirport = airportService.retrieveName(airName);
     final Airport currentAirport = optAirport.stream()
             .findAny()
             .orElse(new Airport());

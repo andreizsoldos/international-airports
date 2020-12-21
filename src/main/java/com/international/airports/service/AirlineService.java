@@ -3,6 +3,7 @@ package com.international.airports.service;
 import com.international.airports.model.Airline;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AirlineService {
 
@@ -11,5 +12,7 @@ public interface AirlineService {
   List<Airline> populateAirlineSearchResults();
 
   List<String> getAirlineNamesByTypingLetters(String name);
+
+  Optional<Airline> retrieveName(String name);
 
 }

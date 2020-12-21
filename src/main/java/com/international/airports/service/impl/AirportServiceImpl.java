@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class AirportServiceImpl implements AirportService {
@@ -17,10 +18,19 @@ public class AirportServiceImpl implements AirportService {
 
   @Override
   public List<String> getAirportNamesByTypingLetters(final String name) {
-    return airportRepository.findByNameContainingIgnoreCase(name)
+    return airportRepository.findByNameOrCityOrCountryContainingIgnoreCase(name)
             .stream()
-            .map(e -> e.getName())
+            .map(e -> e.getName() + " --[" + e.getCity() + ", " + e.getCountry() + "]--")
             .collect(Collectors.toList());
+  }
+
+  @Override
+  public Optional<Airport> retrieveName(final String name) {
+    final String airport = Stream.of(name)
+            .map(e -> e.substring(0, e.indexOf(" --[")))
+            .collect(Collectors.joining());
+
+    return airportRepository.findByName(airport);
   }
 
   @Override
