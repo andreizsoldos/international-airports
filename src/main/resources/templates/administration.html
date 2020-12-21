@@ -7,6 +7,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="_csrf" th:content="${_csrf.token}" /> <!-- for Spring Security -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" /> <!-- for Spring Security -->
 
     <title>Flight List Administration</title>
 
@@ -52,8 +54,8 @@
             <td th:text="${flight.getArrival().format(formatter)}">A_DT</td>
             <td th:text="${flight.getArrivalAirport().getName()}">A_A</td>
             <td>
-              <span class="glyphicon glyphicon-pencil button edit" style="float: left"></span>
-              <span class="glyphicon glyphicon-trash button delete" style="float: right"></span>
+              <a th:id="'ID:' + ${flight.getId()} + '_edit'" title="Edit flight" class="glyphicon glyphicon-pencil button edit" style="float: left; text-decoration: none"></a>
+              <a th:id="'ID:' + ${flight.getId()} + '_delete'" th:href="@{/api/delete-flight(id=${flight.getId()})}" title="Delete flight" class="glyphicon glyphicon-trash button delete" style="float: right; text-decoration: none"></a>
             </td>
           </tr>
           </tbody>

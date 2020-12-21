@@ -1,7 +1,6 @@
 package com.international.airports.repository;
 
 import com.international.airports.model.Airline;
-import com.international.airports.model.Airport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,6 +17,6 @@ public interface AirlineRepository extends JpaRepository<Airline, Long> {
   @Query("select a from Airline a where " +
           "lower(a.name) LIKE lower(concat('%', concat(:letters, '%'))) or " +
           "lower(a.country) LIKE lower(concat('%', concat(:letters, '%')))")
-  List<Airline> findByNameOrCountryContainingIgnoreCase(@Param("letters") String letters);
+  List<Airline> customFindByNameOrCountryContainingIgnoreCase(@Param("letters") String letters);
 
 }

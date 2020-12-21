@@ -20,7 +20,7 @@ public class AirlineServiceImpl implements AirlineService {
 
   @Override
   public List<String> getAirlineNamesByTypingLetters(final String name) {
-    return airlineRepository.findByNameOrCountryContainingIgnoreCase(name)
+    return airlineRepository.customFindByNameOrCountryContainingIgnoreCase(name)
             .stream()
             .map(e -> e.getName() + " --[" + e.getCountry() + "]--")
             .collect(Collectors.toList());

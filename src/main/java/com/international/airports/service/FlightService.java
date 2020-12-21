@@ -19,4 +19,7 @@ public interface FlightService {
                          String newAirline);
 
   DateTimeFormatter formatDateTime(String pattern);
+
+  Integer deleteSelectedFlight(Long id);
+
 }

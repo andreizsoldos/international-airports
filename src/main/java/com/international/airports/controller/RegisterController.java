@@ -27,7 +27,7 @@ public class RegisterController {
   private UserRepository userRepository;
 
   @InitBinder
-  protected void initBinder(WebDataBinder binder) {
+  protected void initBinder(final WebDataBinder binder) {
     binder.setValidator(new UserDtoInputValidator(userRepository));
   }
 

@@ -3,8 +3,6 @@ package com.international.airports.service.impl;
 import com.international.airports.model.Airline;
 import com.international.airports.model.Airport;
 import com.international.airports.model.Flight;
-import com.international.airports.repository.AirlineRepository;
-import com.international.airports.repository.AirportRepository;
 import com.international.airports.repository.FlightRepository;
 import com.international.airports.service.AirlineService;
 import com.international.airports.service.AirportService;
@@ -41,6 +39,11 @@ public class FlightServiceImpl implements FlightService {
     list.add("Arrival Date/Time");
     list.add("Arrival Airport");
     return list;
+  }
+
+  @Override
+  public Integer deleteSelectedFlight(final Long id) {
+    return flightRepository.customDeleteById(id);
   }
 
   @Override

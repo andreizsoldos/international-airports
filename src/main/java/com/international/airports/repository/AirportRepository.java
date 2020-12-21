@@ -18,6 +18,6 @@ public interface AirportRepository extends JpaRepository<Airport, Long> {
           "lower(a.name) LIKE lower(concat('%', concat(:letters, '%'))) or " +
           "lower(a.city) LIKE lower(concat('%', concat(:letters, '%'))) or " +
           "lower(a.country) LIKE lower(concat('%', concat(:letters, '%')))")
-  List<Airport> findByNameOrCityOrCountryContainingIgnoreCase(@Param("letters") String letters);
+  List<Airport> customFindByNameOrCityOrCountryContainingIgnoreCase(@Param("letters") String letters);
 
 }

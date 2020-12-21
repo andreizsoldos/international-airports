@@ -18,7 +18,7 @@ public class AirportServiceImpl implements AirportService {
 
   @Override
   public List<String> getAirportNamesByTypingLetters(final String name) {
-    return airportRepository.findByNameOrCityOrCountryContainingIgnoreCase(name)
+    return airportRepository.customFindByNameOrCityOrCountryContainingIgnoreCase(name)
             .stream()
             .map(e -> e.getName() + " --[" + e.getCity() + ", " + e.getCountry() + "]--")
             .collect(Collectors.toList());
