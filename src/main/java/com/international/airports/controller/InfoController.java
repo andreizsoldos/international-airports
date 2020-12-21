@@ -1,7 +1,6 @@
 package com.international.airports.controller;
 
 import com.international.airports.model.Airport;
-import com.international.airports.repository.AirportRepository;
 import com.international.airports.service.AirportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
