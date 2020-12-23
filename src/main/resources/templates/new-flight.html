@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Flight List Administration</title>
+    <title>New Flight</title>
 
     <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -37,7 +37,7 @@
               </thead>
             </table>
             <div class="space"></div>
-            <form id="formSubmitSearch" th:action="@{/add-new-flight}" method="post" th:object="${newFlight}">
+            <form id="formSubmitSearch" th:action="@{/admin/add-new-flight}" method="post" th:object="${newFlight}">
               <div class="form-group">
                 <label for="flightNo">Flight Number</label>
                 <input type="text" class="form-control" id="flightNo" th:field="*{flightNo}" placeholder="Enter flight number" required>

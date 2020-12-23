@@ -16,4 +16,7 @@ public interface AirportService {
   List<String> getAirportNamesByTypingLetters(String name);
 
   Optional<Airport> retrieveName(String name);
+
+  String computeName(String name);
+
 }

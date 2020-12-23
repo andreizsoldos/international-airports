@@ -15,4 +15,6 @@ public interface AirlineService {
 
   Optional<Airline> retrieveName(String name);
 
+  String computeName(String name);
+
 }

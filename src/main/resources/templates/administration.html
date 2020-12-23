@@ -34,7 +34,7 @@
             <tr>
               <th colspan="6">Flight List Administration</th>
               <th colspan="2">
-                <a class="btn btn-info addButton" href="../templates/new-flight.html" th:href="@{/add-new-flight}" title="Add new flight">
+                <a class="btn btn-info addButton" href="../templates/new-flight.html" th:href="@{/admin/add-new-flight}" title="Add new flight">
                   <span><span class="glyphicon glyphicon-plus"></span> Add flight</span>
                 </a>
               </th>
@@ -54,8 +54,8 @@
             <td th:text="${flight.getArrival().format(formatter)}">A_DT</td>
             <td th:text="${flight.getArrivalAirport().getName()}">A_A</td>
             <td>
-              <a th:id="'ID:' + ${flight.getId()} + '_edit'" title="Edit flight" class="glyphicon glyphicon-pencil button edit" style="float: left; text-decoration: none"></a>
-              <a th:id="'ID:' + ${flight.getId()} + '_delete'" th:href="@{/api/delete-flight(id=${flight.getId()})}" title="Delete flight" class="glyphicon glyphicon-trash button delete" style="float: right; text-decoration: none"></a>
+              <a th:id="'ID:' + ${flight.getId()} + '_edit'" th:href="@{/admin/edit-flight(id=${flight.getId()})}" title="Edit flight" class="glyphicon glyphicon-pencil button edit" style="float: left; text-decoration: none"></a>
+              <a th:id="'ID:' + ${flight.getId()} + '_delete'" th:href="@{/admin/delete-flight(id=${flight.getId()})}" title="Delete flight" class="glyphicon glyphicon-trash button delete" style="float: right; text-decoration: none"></a>
             </td>
           </tr>
           </tbody>

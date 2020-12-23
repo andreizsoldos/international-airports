@@ -1,5 +1,6 @@
 package com.international.airports.service.impl;
 
+import com.international.airports.domain.FlightDto;
 import com.international.airports.model.Airline;
 import com.international.airports.model.Airport;
 import com.international.airports.model.Flight;
@@ -42,8 +43,44 @@ public class FlightServiceImpl implements FlightService {
   }
 
   @Override
-  public Integer deleteSelectedFlight(final Long id) {
-    return flightRepository.customDeleteById(id);
+  public FlightDto findCurrentFlight(final long id) {
+    final Flight currentFlight = Optional.ofNullable(flightRepository.findById(id))
+            .orElseThrow(() -> new IllegalArgumentException("Cannot find Flight ID " + id + ". No record found in database!"));
+    final FlightDto thisFlight = new FlightDto();
+    thisFlight.setId(currentFlight.getId());
+    thisFlight.setFlightNo(currentFlight.getFlightNo());
+    thisFlight.setDeparture(currentFlight.getDeparture());
+    thisFlight.setDepartureAirportName(airportService.computeName(currentFlight.getDepartureAirport().getName()));
+    thisFlight.setArrival(currentFlight.getArrival());
+    thisFlight.setArrivalAirportName(airportService.computeName(currentFlight.getArrivalAirport().getName()));
+    thisFlight.setAirlineName(airlineService.computeName(currentFlight.getAirline().getName()));
+
+    return thisFlight;
+  }
+
+  @Override
+  public Integer deleteSelectedFlight(final long id) {
+    return Optional.ofNullable(flightRepository.customDeleteById(id))
+            .orElseThrow(() -> new IllegalArgumentException("Cannot delete Flight ID " + id + ". No record found in database!"));
+  }
+
+  @Override
+  public Integer editFlight(final long currentId,
+                           final String currentFlightNo,
+                           final String currentDepartureDateTime,
+                           final String currentDepartureAirport,
+                           final String currentArrivalDateTime,
+                           final String currentArrivalAirport,
+                           final String currentAirline) {
+
+    return Optional.ofNullable(flightRepository.customUpdateById(currentId,
+                            currentFlightNo,
+                            LocalDateTime.parse(currentDepartureDateTime),
+                            getAirport(currentDepartureAirport),
+                            LocalDateTime.parse(currentArrivalDateTime),
+                            getAirport(currentArrivalAirport),
+                            getAirline(currentAirline)))
+            .orElseThrow(() -> new IllegalArgumentException("Cannot edit Flight ID " + currentId + ". No record found in database!"));
   }
 
   @Override
@@ -65,17 +102,17 @@ public class FlightServiceImpl implements FlightService {
   }
 
   private Airport getAirport(final String name) {
-    final Optional<Airport> optAirport = airportService.retrieveName(name);
+    Optional<Airport> optAirport = airportService.retrieveName(name);
     return optAirport.stream()
             .findAny()
-            .orElse(new Airport());
+            .orElseThrow(() -> new IllegalArgumentException("This airport name doesn't exists in database!"));
   }
 
   private Airline getAirline(final String name) {
-    final Optional<Airline> optAirline = airlineService.retrieveName(name);
+    Optional<Airline> optAirline = airlineService.retrieveName(name);
     return optAirline.stream()
             .findAny()
-            .orElse(new Airline());
+            .orElseThrow(() -> new IllegalArgumentException("This airline name doesn't exists in database!"));
   }
 
   @Override

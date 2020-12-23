@@ -1,5 +1,6 @@
 package com.international.airports.service;
 
+import com.international.airports.domain.FlightDto;
 import com.international.airports.model.Flight;
 
 import java.time.format.DateTimeFormatter;
@@ -18,8 +19,17 @@ public interface FlightService {
                          String newArrivalAirport,
                          String newAirline);
 
+  Integer editFlight(long currentId,
+              String currentFlightNo,
+              String currentDepartureDateTime,
+              String currentDepartureAirport,
+              String currentArrivalDateTime,
+              String currentArrivalAirport,
+              String currentAirline);
+
   DateTimeFormatter formatDateTime(String pattern);
 
-  Integer deleteSelectedFlight(Long id);
+  Integer deleteSelectedFlight(long id);
 
+  FlightDto findCurrentFlight(long id);
 }

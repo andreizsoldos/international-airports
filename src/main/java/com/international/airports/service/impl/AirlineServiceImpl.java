@@ -36,6 +36,15 @@ public class AirlineServiceImpl implements AirlineService {
   }
 
   @Override
+  public String computeName(final String name) {
+    final Optional<Airline> optAirport = airlineRepository.findByName(name);
+
+    return optAirport
+            .map(e -> e.getName() + " --[" + e.getCountry() + "]--")
+            .orElse("");
+  }
+
+  @Override
   public List<String> populateAirlinesHeader() {
     final List<String> list = new ArrayList<>();
     list.add("Airline Name");

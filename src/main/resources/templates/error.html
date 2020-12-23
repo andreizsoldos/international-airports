@@ -12,26 +12,24 @@
   <link type="text/css" rel="stylesheet" th:href="@{/styles/error.css}" href="../static/styles/error.css">
 
   </head>
-  <body>
+  <body th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
     <div class="background">
       <div class="ground"></div>
     </div>
     <div class="container">
       <div class="left-section">
         <div class="inner-content">
-          <!--/*@thymesVar id="status" type=""*/-->
-          <h1 class="heading" th:text="${status}">Code</h1>
-          <!--/*@thymesVar id="error" type=""*/-->
-          <h1 class="heading" style="font-size: 7em; font-weight: bold" th:text="${#strings.toUpperCase(error)}">Error</h1>
+          <p class="subheading" style="color: #f5f6fa; padding: 0">Back to
+            <a class="subheading glyphicon glyphicon-home" style="text-decoration: none; font-weight: bold; color: white; padding: 0" title="Home Page" href="../templates/home-page.html" th:href="@{/}"></a>
+          </p>
+          <br>
+          <h1 class="heading" th:text="${#response.status}">Code</h1>
+          <h1 class="heading" style="font-size: 7em; font-weight: bold" th:text="${#strings.toUpperCase(httpStatus.reasonPhrase)}">Error</h1>
           <!--/*@thymesVar id="path" type=""*/-->
           <p class="subheading" th:text="'Path: ' + ${path}">Path</p>
           <br><br><br>
           <!--/*@thymesVar id="message" type=""*/-->
-          <h2 class="subheading" style="font-size: 3em; color: #f5f6fa" th:text="${message}">Error message</h2>
-          <br><br>
-          <p class="subheading" style="color: #f5f6fa; padding: 0">Back to
-            <a class="subheading glyphicon glyphicon-home" style="text-decoration: none; font-weight: bold; color: white; padding: 0" title="Home Page" href="../templates/home-page.html" th:href="@{/}"></a>
-          </p>
+          <p class="subheading" style="font-size: 2em; color: #f5f6fa" th:text="${message}">Reason</p>
         </div>
       </div>
       <div class="right-section">

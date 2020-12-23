@@ -14,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -30,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private UserDetailsService userDetailsService;
 
   @Autowired
-  private CustomAuth authErrors;
+  private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
   @Bean
   public PasswordEncoder bCryptPasswordEncoder() {
@@ -61,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .permitAll()
             .and()
             .exceptionHandling()
-            .authenticationEntryPoint(authErrors);
+            .authenticationEntryPoint(customAuthenticationEntryPoint);
   }
 
   @Bean

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Edit Flight</title>
+
+  <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <link type="text/css" rel="stylesheet" th:href="@{/styles/search-box-flight-style.css}" href="../static/styles/search-box-flight-style.css">
+  <link type="text/css" rel="stylesheet" th:href="@{/styles/header.css}" href="../static/styles/header.css">
+  <link type="text/css" rel="stylesheet" th:href="@{/styles/footer.css}" href="../static/styles/footer.css">
+  <link type="text/css" rel="stylesheet" th:href="@{/styles/search-box-header-style.css}" href="../static/styles/search-box-header-style.css">
+  <link type="text/css" rel="stylesheet" th:href="@{/styles/background-style.css}" href="../static/styles/background-style.css">
+
+  <script src="https://code.jquery.com/jquery-1.12.3.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div class="wrapper">
+  <div th:replace="fragments/header :: main-header"></div>
+  <div id="content">
+    <div class="center-pager">
+      <div class="container">
+        <table>
+          <thead>
+          <tr>
+            <td th:text="${'Edit Flight ID: ' + editFlight.getId()}">Edit Flight ID: 1</td>
+          </tr>
+          </thead>
+        </table>
+        <div class="space"></div>
+        <form id="formSubmitSearch" th:action="@{/admin/edit-flight(id=${editFlight.getId()})}" method="post" th:object="${editFlight}">
+          <div class="form-group">
+            <label for="flightNo">Flight Number</label>
+            <input type="text" class="form-control" id="flightNo" th:field="*{flightNo}" th:value="${editFlight.flightNo}" placeholder="Enter flight number" required>
+          </div>
+          <div class="form-group">
+            <label for="departure_time">Departure Date/Time</label>
+            <input type="datetime-local" class="form-control" id="departure_time" th:field="*{departure}" th:value="${editFlight.departure}" placeholder="" required>
+          </div>
+          <div class="form-group">
+            <label for="departure_airport">Departure Airport</label>
+            <input type="text" class="form-control" id="departure_airport" th:field="*{departureAirportName}" th:value="${editFlight.departureAirportName}" placeholder="Search departure airport" required>
+          </div>
+          <div class="form-group">
+            <label for="arrival_time">Arrival Date/Time</label>
+            <input type="datetime-local" class="form-control" id="arrival_time" th:field="*{arrival}" th:value="${editFlight.arrival}" placeholder="" required>
+          </div>
+          <div class="form-group">
+            <label for="arrival_airport">Arrival Airport</label>
+            <input type="text" class="form-control" id="arrival_airport" th:field="*{arrivalAirportName}" th:value="${editFlight.arrivalAirportName}" placeholder="Search arrival airport" required>
+          </div>
+          <div class="form-group">
+            <label for="airlineCompany">Airline Company</label>
+            <input type="text" class="form-control" id="airlineCompany" th:field="*{airlineName}" th:value="${editFlight.airlineName}" placeholder="Search airline company" required>
+          </div>
+          <div class="buttons">
+            <button id="submitFlight" type="submit" class="btn btn-info btn-block">Update flight</button>
+            <a id="cancelSubmit" class="btn btn-info btn-block" th:onclick="cancelSearch()">Cancel</a>
+          </div>
+          <div class="space"></div>
+        </form>
+      </div>
+      <div id="showResult" class="container2">
+        <table>
+          <thead>
+          <tr>
+            <td>List</td>
+          </tr>
+          </thead>
+        </table>
+        <div class="space"></div>
+        <form id="formFlightSearch" autocomplete="off">
+          <div class="list autocomplete-flight">
+            <input id="resultSearch" type="text" class="form-control" readonly>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function cancelSearch() {
+    var valCancel = document.getElementById("cancelSubmit");
+    valCancel.setAttribute("href", "[[@{/admin}]]");
+  }
+
+  $(document).ready(function() {
+    $('#departure_airport').focus(function() {
+      $('.container2').show('slow');
+      autocomplete(document.querySelector("#departure_airport"), document.querySelector("#resultSearch"), "airports");
+    });
+    $('#departure_airport').focusout(function() {
+      $('.container2').hide('slow');
+    });
+    $('#departure_airport').blur(function(){
+      if( !$(this).val() ) {
+        $('.container2').hide('slow');
+      }
+    });
+
+    $('#arrival_airport').focus(function() {
+      $('.container2').show('slow');
+      autocomplete(document.querySelector("#arrival_airport"), document.querySelector("#resultSearch"), "airports");
+    });
+    $('#arrival_airport').focusout(function() {
+      $('.container2').hide('slow');
+    });
+    $('#arrival_airport').blur(function(){
+      if( !$(this).val() ) {
+        $('.container2').hide('slow');
+      }
+    });
+
+    $('#airlineCompany').focus(function() {
+      $('.container2').show('slow');
+      autocomplete(document.querySelector("#airlineCompany"), document.querySelector("#resultSearch"), "airlines");
+    });
+    $('#airlineCompany').focusout(function() {
+      $('.container2').hide('slow');
+    });
+    $('#airlineCompany').blur(function(){
+      if( !$(this).val() ) {
+        $('.container2').hide('slow');
+      }
+    });
+  });
+</script>
+</body>
+</html>

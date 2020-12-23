@@ -34,6 +34,15 @@ public class AirportServiceImpl implements AirportService {
   }
 
   @Override
+  public String computeName(final String name) {
+    final Optional<Airport> optAirport = airportRepository.findByName(name);
+
+    return optAirport
+            .map(e -> e.getName() + " --[" + e.getCity() + ", " + e.getCountry() + "]--")
+            .orElse("");
+  }
+
+  @Override
   public List<String> populateRegionsAlphabetically() {
     final List<String> list = new ArrayList<>(new HashSet<>(airportRepository.findAll()
             .stream()

@@ -1,6 +1,7 @@
 package com.international.airports.controller;
 
 import com.international.airports.model.Airport;
+import com.international.airports.repository.AirportRepository;
 import com.international.airports.service.AirportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,14 +18,22 @@ public class InfoController {
   @Autowired
   private AirportService airportService;
 
+  @Autowired
+  private AirportRepository airportRepository;
+
   @PreAuthorize("hasRole('moderator') or hasRole('admin')")
   @RequestMapping("/infoPage")
   public ModelAndView displayInfo(@RequestParam("name") final String airName) {
+    Optional<Airport> optAirport;
     final ModelAndView mav = new ModelAndView("info");
-    final Optional<Airport> optAirport = airportService.retrieveName(airName);
+    if (airName.contains("--[")) {
+      optAirport = airportService.retrieveName(airName);
+    } else {
+      optAirport = airportRepository.findByName(airName);
+    }
     final Airport currentAirport = optAirport.stream()
             .findAny()
-            .orElse(new Airport());
+            .orElseThrow(() -> new IllegalArgumentException("This airport name doesn't exists in database!"));
     mav.addObject("airport_info", currentAirport);
     return mav;
   }
